@@ -1,0 +1,102 @@
+class Snake {
+	private:
+		Node* tail;
+		Node* head;
+	public:
+		Snake(Node* start) {
+			tail = start;
+			head = start;
+		}
+		void MoveTail() {
+			tail = tail.prev;
+		}
+		Node* GetTail() {
+			return tail;
+		}
+		void MoveHead(Node* newhead) {
+			head.prev = newhead;
+			head = newhead;
+		}
+		Node* GetNewHead(int direct) {// 0 up 1 down 2 left 3 right
+			int x = head.x;
+			int y = head.y;
+			switch (direct) {
+				case 0: {
+					x--;
+					break;
+				}
+				case 1: {
+					x++;
+					break;
+				}
+				case 2: {
+					y--;
+					break;
+				}
+				case 3: {
+					y++;
+					break;
+				}
+			}
+			return new Node(x,y);
+		}
+};
+
+class Node{             
+	private:
+		int x;
+		int y;
+		Node* prev;	
+	public:	
+		Node(int xx, int yy) {
+			x = xx;
+			y = yy;
+			prev = NULL;
+		}
+		// 省略一系列get function, 加加减减 function. 
+};
+
+class SnakeGame {
+	private:
+		Snake my_snake;
+		vector<vector<int>> matrix; (0 free 1 snake 2 Node)
+		int n;
+		int m;
+	public:
+		SnakeGame(Node start, vector<vector<int>> input) { // 初始化
+			matrix = input;
+			matrix[start.x][start.y] = 1;
+			n = input.size();
+			m = input[0].size();
+		}
+		bool Move(int direct) { //0 .. 3 represent each directions, any time return false then stop the whole game.
+			Node* temp = my_snake.GetNewHead(direct);    // Based on the direct, get the new Node
+			if (matrix[temp.x][temp.y] == 1 || temp.x <0 || temp.x >=n || temp.y < 0 || temp.y >= m) { // 撞蛇身子 or 撞边界
+				cout << "Game Failed" << endl;
+				return false;
+			} else { // move is available
+				my_snake.MoveHead(temp);
+				Node* tmp2 = my_snake.GetTail();  
+				if (matrix[temp.x][temp.y] == 0) {     //Head没吃到东西, 则需要移动尾巴
+					matrix[tmp2.x][tmp2.y] = 0;         
+					my_snake.MoveTail();
+				}
+				matrix[temp.x][temp.y] = 1; // matrix中 head 位置变为 snake					
+			}
+			if (Finished()) {
+				cout << "Game Completed" << endl;
+				return false;
+			}
+			return true;
+		}
+		bool Finished() {          // matrix 没有 2 说明吃完了， 返回游戏胜利
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++)｛
+					if (matrix[i][j] == 2) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+};

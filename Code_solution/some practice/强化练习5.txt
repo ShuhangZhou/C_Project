@@ -1,0 +1,68 @@
+Q1 Best First Search
+Q1.1   一个字典有给一系列strings，要求找两个string,使得它们没有共同字符，并且长度乘积  最大.  (Assumption:   all letters in the word is from ‘a-z’ in ASCII)
+Best First Search:
+Initial state: <s1, s2>;
+expansion / generation rules: <s_i+1, s_j>  OR <s_i, s_j+1>
+Termination condition:  once we found the first state popped out of the pq is valid
+
+
+Q1.2  How to find the k-th smallest value of f  in the f(x,y,z) = 3^x  * 5^y * 7^z  (int x > 0, y>0, z>0).
+Best First Search:
+Initial state: <x=1, y=1 , z=1>
+expansion / generation rules:  expand<i, j, k> → generate <i+1, j , k>,  <i, j+1, k>, <i, j, k+1> 
+Termination condition:  when the k-th state is popped out of the heap,  STOP!
+
+struct Node {
+    int x, y, z;
+    Node( int a = 0, int b = 0, int c = 0):
+        x(a), y(b), z(b) {}
+};
+bool operator< (Node a, Node b) {
+	double tmp1 =pow(3 , a.x) + pow(5 , a.y) + pow(7 , a.z);
+	double tmp2 =pow(3 , b.x) + pow(5 , b.y) + pow(7 , b.z);
+	return tmp1 > tmp2;
+}
+
+Q1.3 Given three arrays with numbers in ascending order. Pull one number from each array to form a coordinate <x,y,z> in a 3D space. (1) How to find the coordinates of the points that is k-th closest to <0,0,0>?
+
+Best First Search:
+Initial state: <x=A[0], y=B[0] , z=C[0]>
+expansion / generation rules:  expand<i, j, k> → generate <i+1, j , k>,  <i, j+1, k>, <i, j, k> 
+Termination condition:  when the k-th state is popped out of the heap,  STOP!
+Deduplication (using hash_table) is needed 
+
+
+Q1.4 Given a gym with k equipments, and some obstacles.  Let’s say we bought a chair and wanted to put this chair into the gym such that  the sum of the shortest path cost from the chair to the k equipments is minimal.
+
+M2: perform Dijstra’s algorithm from each equipment
+perform how many times of Dijkstra’s algorithm :  k
+Dijkstra’s algorithm time complexity on grids   O( n^2 log(N))
+finally, we sum up all values in each cell  O(k n^2)
+
+Total time complexity = O( k n^2 log(N) + k n^2  )  = O( k n^2 log(N) )
+
+
+Q2   (Design)  Given a single computer with a single CPU and a single core, which has 2GB of memory and 1GB available for use, it also has two 100GB hard drives.
+How to sort 80GB integers of 64 bits.?
+
+设计题，先问interviewer，搞清楚模糊的点：
+objective:  system是干什么的
+functionality： 具体实现什么功能
+scalability: 要处理多大的问题size, 有多少机器/cluster
+
+Assumption 1: Let’s assume that all data is stored in one hard drive, with the other one totally empty.
+Assumption 2:  what is the data of the range.
+	if [0-100]  bucket sort
+Assumption 3:   ascending or descending???
+
+Q3 (string conversion)  
+Q3.1  “A1B2C3D4”  ==> “ABCD1234”
+特殊比较的MergeSort
+
+
+Q3.2  “ABCD1234”  ==> “A1B2C3D4”
+
+
+
+Q4 Histogram questions (直方图问题)
+

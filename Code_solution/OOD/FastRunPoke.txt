@@ -1,0 +1,98 @@
+class FastRun {
+private:
+	vector<Card> Cards;
+	vector<Player> Players;
+public: 
+	FastRun(vector<string> playerName) {          // 输入四个玩家名字
+		for (int i = 1; i <= 13; i++) {
+			Cards.push_back(new Card(“diamond”, i));
+			Cards.push_back(new Card(“heart”, i));
+			Cards.push_back(new Card(“club”, i));
+			Cards.push_back(new Card(“spade”, i));
+		}	
+		for (int i = 0; i < 4; i++) {
+			Players.push_back(new Player(playerName[i]));
+		}
+	}	
+	void Shuffle() {                    // 洗牌
+		for (int i = 51; i >= 0; i-- ) {
+			int ran = random(i);
+			swap(ran, i);
+		}
+	}
+	void DealCards() {                  // 发牌
+		for (int i = 0; i < 13; i++) {
+			for (int j = 0 ; j < 4; j++) {
+				Players[j].DrawCards(cards[i * 4 + j]);
+			}
+		}
+	}
+	string PlayGame() {
+		int i = 0, count = 0;
+		vector<Card> prev;
+		while (1) {
+			if (count == 3) { // 是否连续3个要不起
+				count = 0;
+				prev = NULL;             // 清空，使得当前玩家可以继续出牌
+			}
+			vector<Card> temp = Players[i].PlayCard(prev);
+			if (Players[i].WinState) {  // 出完了就返回胜利者
+				return Players[i].getName;
+			}
+			if (temp == NULL) { // 要不起
+				count ++;
+			} else {   //要的起, 则prev 设置为 temp
+				count = 0;
+				prev = temp;
+			}
+			i = (i + 1) % 4; 
+		}		
+	}
+};
+class Player {
+private:
+	string name;
+	vector<Card> ownCard;
+	int count;
+public:
+	Player(string n) {
+		name = n;
+		count = 0;
+	}
+
+	string getName() {
+		return name;
+	}
+
+	void DrawCard(Card c) {
+		ownCard.push_back(c);
+		count++;
+	}
+
+	bool check(vector<Card> prev, vector<Card> action) {}//检查action是不是ownCard的sub, 以及action是否符合规矩，以及action是否大于prev
+
+	vector<Card> PlayCard(vector<Card> prev) {
+		//input or generate the   {vector<Card> action}  of player based on prev  
+		if (check(prev, action)) {  
+			count -= action.size();
+			return action.
+		} else {
+			return NULL;
+		}
+	}
+
+	bool WinState() {
+		return count == 0;
+	}
+};
+
+class Card {
+private:
+	string shape;
+	int value;
+public:
+	Card(string s, int v) {
+		shape = s;
+		value = v;
+	}	
+};

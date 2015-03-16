@@ -1,0 +1,7 @@
+Homework1: 用java/C++实现Builder里的example
+
+
+
+
+
+Homework2: 用java/C++实现Abstract Factory里的example

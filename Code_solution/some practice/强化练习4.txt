@@ -1,0 +1,60 @@
+Q1. Reverse linkedlist questions
+Node* ReverseList(Node* head) {
+	if (head == NULL || head -> next == NULL) {
+		return head;
+	}
+	Node* newhead = ReverseList(head -> next);
+	head->next->next = head;
+	head->next = NULL;
+	return newhead;
+}
+
+
+Q1.2 Reverse a linked list (pair by pair)
+
+Example 1-> 2 -> 3 -> 4 -> 5 ¡ú NULL
+     prev  cur  next
+
+output :    2 -> 1 -> 4 -> 3 -> 5¡ú NULL;
+
+Node* PairReverse(Node* head) {
+	if (head == NULL || head->next == NULL) {
+		return head;
+	}
+	Node* sec = head->next;
+	head->next = PairReverse(head->next->next);
+	sec->next = head;
+	return sec;
+}
+	
+
+Q1.3 Reverse a binary tree upside down
+Given a binary tree where all the right nodes are leaf nodes, flip it upside down and turn it into a tree with left leaf nodes. For example, turn these:
+
+TreeNode* TreeReverse(TreeNode* root) {
+	if (root->lchild == NULL && root->rchild == NULL) {
+		return root;
+	}
+	TreeNode* rest = TreeReverse(root->lchild);
+	root->lchild->lchild = root->rchild;
+	root->lchild->rchild = root;
+	root->lchild = NULL;
+	root->rchild = NULL;
+	return rest;
+}
+
+
+Q2.3 Print all valid combination of coins that can form a certain amount of money (99 cents)
+
+Q2.4 Print all valid permutations of ()()()       (Class 6 : DFS ÀýÌâ2) 
+
+Q2.5 Print all valid permutations of  3{ }  2[ ]  1( )
+whenever we want to put  a new right parenthesis  ) ] },  we need to figure out the latest left parenthesis added to the prefix- of the solution (using a stack)
+
+Q2.6 Eight Queen
+
+
+
+Q3: 2,3,4-SUM questions
+Find X-elements from a (unsorted/sorted) array such that their sum is equal to a target value.
+

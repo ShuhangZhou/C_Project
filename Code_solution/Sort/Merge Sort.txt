@@ -1,0 +1,35 @@
+  vector<int> combine(vector<int> a, vector<int> b) {
+	  vector<int> result;
+	  int i = 0;
+	  int j = 0;
+	  while (i != a.size() && j != b.size()) {
+			  if (a[i] < b[j]) {
+				  result.push_back(a[i++]);
+			  } else {
+				  result.push_back(b[j++]);
+			  }
+	  }
+	  while(i == a.size() && j != b.size()) {
+		  result.push_back(b[j++]);
+	  }
+	  while(j == b.size() && i != a.size()) {
+		  result.push_back(a[i++]);
+	  }
+	  return result;
+  }			
+vector<int> merge_sort(vector<int>& a, int left, int right) {
+  vector<int> result;
+	if (left > right) return result;
+	if (left == right) {
+		result.push_back(a[left]);
+		return result;
+	}
+	int mid = left + (right - left) / 2;
+	vector<int> left_res = merge_sort(a, left, mid);
+	vector<int> right_res = merge_sort(a, mid+1, right);
+	result = combine(left_res, right_res);
+	return result;
+}
+  vector<int> solve(vector<int> a) {
+    return merge_sort(a, 0, a.size()-1);
+  }

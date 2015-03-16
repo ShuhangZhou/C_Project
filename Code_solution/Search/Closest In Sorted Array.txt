@@ -1,0 +1,29 @@
+  int findclosest(vector<int> a, int target, int left, int right) {
+    if (left > right) {
+      return -1;
+    }
+    //////
+    int l = left;
+    int r = right;
+    while (l < r - 1) {
+      int mid = l + (r - l) / 2;
+      if (a[mid] == target){
+        return mid;
+      } else if (a[mid] > target) {
+        r = mid;
+      } else {
+        l = mid;
+      }
+    }
+    //int result = abs(a[l] - target) < abs(a[r] - target) : l ? r;
+    int result;
+    if (abs(a[l] - target) < abs(a[r] - target)) {
+      result = l;
+    } else {
+      result = r;
+    }
+    return result;
+  }
+  int solve(vector<int> input, int target) {
+    return findclosest(input, target, 0, input.size() - 1);
+  }

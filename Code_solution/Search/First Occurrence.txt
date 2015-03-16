@@ -1,0 +1,25 @@
+  int findfirst(vector<int> a, int target, int left, int right) {
+    if (left > right) {
+      return -1;
+    }
+    int FirstOccur = -1;
+    //////
+    int l = left;
+    int r = right;
+    while (l < r - 1) {
+      int mid = l + (r - l) / 2;
+      if (a[mid] == target){
+        r = mid;
+      } else if (a[mid] > target) {
+        r = mid;
+      } else {
+        l = mid;
+      }
+    }
+    if (a[l] == target) FirstOccur = l;
+    else if (a[r] == target) FirstOccur = r;
+    return FirstOccur;
+  }
+  int solve(vector<int> input, int target) {
+    return findfirst(input, target, 0, input.size() - 1);
+  }

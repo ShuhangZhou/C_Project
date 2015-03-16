@@ -1,0 +1,23 @@
+  vector<int> solve(vector<int> a) {
+    int n = a.size();
+    vector<int> result = a;
+    if (n <= 1) return a;
+    int i = -1;
+    int j = 0;
+    int k = n;
+    while (j < k) {
+        if (result[j] == -1) {
+            int temp = result[++i];
+            result[i]=result[j];
+            result[j] = temp;
+            if (i == j) j++;
+        } else if (result[j] == 0) {
+            j++;
+        } else {
+            int temp = result[--k];
+            result[k] = result[j];
+            result[j] = temp;
+        }
+    }
+    return result;
+  }

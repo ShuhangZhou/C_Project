@@ -1,0 +1,145 @@
+1. 根据你最常用的语言(e.g., C++ or Java), 对每一个基本OOP概念整理出相关的语言规范
+
+public,private和protected.他们的区别是:public定义的成员可以被外部访问和修改;private成员不能被外部读取和修改,只能在类的内部使用,在派生类中无法访问;protected成员也不能被外部访问与修改,只能在内部使用,但是在派生类中将作为private成员使用.所以如果在定义类时,能够访问的就用public定义,不能访问就用protected定义.
+
+class student {
+protected:
+	string name , birthday;
+	int num;
+public:
+	student() {
+		num = 0;
+		name = "";
+		birthday = "";
+	}
+	student(int _num, string _name, string _bir) {
+		num = _num;
+		name = _name;
+		birthday = _bir;
+	}
+	~student(){}
+	void print_data() {
+		cout << "name: " << name << '\n';
+		cout << "num: " << num << '\n';
+		cout << "birthday: " << birth << '\n';
+		return;
+	}
+};
+
+class score:public student {
+protected:
+	int score;
+};
+
+例子2：
+ballscore.h:
+class ballscore { 
+protected: 
+	const static int gbs = 5;//好球单位得分 
+	const static int bbs = -3;//坏球单位扣分 
+	float gradescore;//平均成绩 
+public: 
+	float GetGS(float goodball,float badball)//goodball为好球数量,badball为坏求数量 
+	{ 
+		gradescore = (goodball*gbs + badball*bbs) / (goodball + badball); 
+		return gradescore;//返回平均成绩 
+	} 
+}; 
+
+main:
+#include <iostream> 
+#include "ballscore.h" 
+using namespace std; 
+
+int main() { 
+	ballscore jeff; 
+	cout<<jeff.GetGS(10,3); 
+	//jeff.gradescore=5.5;//想篡改jeff的平均成绩是错误的! 
+	cin.get(); 
+	return 0;	
+}
+
+
+2. 运用OOD设计一个in-memory File System (重点在API的定义)
+
+
+
+
+3. 设计实现HashMap/Hashtable, 并阅读Java/C++的实现源码
+HashMap.h:
+struct ListNode {
+	int value;
+	ListNode *next;
+	ListNode(int x) : value(x) , next(NULL) {}
+};
+class HashMap {
+protected:
+	const static int HashLength=100;
+	ListNode* HashList[HashLength];
+private:
+	int HashFunc(int v) {
+		return v % HashLength;
+	}
+public:
+	HashMap() {
+		for (int i = 0 ; i < 100 ; i++) {
+			HashList[i] = new ListNode(i);
+		}
+	}
+	~HashMap() {}
+	void insert(int v) {
+		int temp = HashFunc(v);
+		ListNode* p = HashList[temp];
+		while (p->next != NULL) {
+			if (p->next->value == v) {
+				return;
+			}
+			p = p->next;
+		}
+		ListNode* q = new ListNode(v);
+		p->next = q;
+	}
+	bool check(int v) {
+		int temp = HashFunc(v);
+		ListNode* p = HashList[temp];
+		while (p->next != NULL) {
+			if (p->next->value == v) {
+				return true;
+			}
+			p = p->next;
+		}
+		return false;
+	}
+};
+
+intHash.cpp:
+#include <iostream>
+#include "HashMap.h"
+using namespace std;
+
+int main() {
+	HashMap Hmap;//create HashMap
+	//insert values
+	Hmap.insert(1);
+	Hmap.insert(10);
+	Hmap.insert(30);
+	Hmap.insert(80);
+	Hmap.insert(1001);
+	Hmap.insert(666);
+	//check values
+	cout << Hmap.check(1) << endl;
+	cout << Hmap.check(2) << endl;
+	cout << Hmap.check(10) << endl;
+	cout << Hmap.check(666) << endl;
+	cout << Hmap.check(1001) << endl;
+	cout << Hmap.check(1111) << endl;
+
+	cin.get();
+}
+
+
+
+
+
+
+4. 完成Parking Lot的例子

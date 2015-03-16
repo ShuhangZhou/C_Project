@@ -1,0 +1,53 @@
+template <class T> class My_Queue {
+	private:
+		T *queue;
+		int size;
+		int head;
+		int tail;
+		int maxsize;
+	public:
+	 	My_Queue(int length) {
+			maxsize = length;
+			queue = new T[maxsize];
+			size = 0;
+			head = 0;
+			tail = 0;
+		}
+		My_Queue() {
+			maxsize = 100;
+			queue = new T[maxsize];
+			size = 0;
+		}
+		~My_Queue() {
+			delete [] queue;
+		}
+		bool isEmpty() {
+			return size == 0;
+		}
+		bool isFull() {
+			return size == maxsize;
+		}
+		void push(T t) {
+			if (!isFull()) {          // 非满
+				if (!isEmpty()) {      //  非空，则head需要移动,否则不动
+					head = (head + 1) % maxsize;
+				} 	
+				queue[head] = t;
+				size ++;
+			} else {
+				cout << "queue is full!" << endl;
+			}
+		}
+		T pop() {
+			if (isEmpty()) {
+				cout << "queue is empty!" << endl;
+				return NULL;
+			}
+			T t = queue[tail];
+			size --;
+			if (!isEmpty()) {            // 非空则tail 移动
+				tail = (tail + 1) % maxsize;
+			}
+			return t;
+		}
+};

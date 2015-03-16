@@ -1,0 +1,88 @@
+Q1. Common Element problems
+Q1.1 Find common elements in two arrays
+
+sorted： two pointer
+unsorted:
+a. sort it, then do two pointer
+b. hash_map
+
+vector<int> FindCommon(vector<int> A, vector<int> B) {
+	int n = A.size();
+	int m = B.size();
+	vector<int> temp;
+	for(int i = 0, j = 0; i < n, j < m;) {
+		if (A[i] == B[j]) {
+			temp.push_back(A[i]);
+		} else if (A[i] > B[j]) {
+			j++;
+		} else {
+			i++;
+		}
+	}
+	return temp;
+}
+
+Q2 String replacement problems
+Q2.1  Replace all substrings s1 in a string s with s2 
+string Replace(string input, string s1, string s2) {
+	if (input == "" || input.length() < s1.length()) {
+		return input;
+	}
+	string result = "";
+	
+
+
+
+
+Q2.2:  (string) Given a string such as “a3b1c4d0” → “aaabcccc” 
+Step1: we deal with all numbers that can shorten the string.    In the meantime, we count all numbers > 2.
+Step2: we deal with all numbers that can not shorten the string…..
+
+reduce memory allocation
+
+2.2b) or aaabccc -> a3b1c4
+
+
+Q3. Use recursion to return values needed  in a bottom-up way in binary tree
+Q3.1 Determine whether a binary tree is a balance binary tree
+
+bool isBalanced(TreeNode* root) {
+	if (root == NULL) {
+		return true;
+	}
+	int diff = abs(Height(root->left) - Height(root->right));
+	if (diff > 1) {
+		return false;
+	}
+	return isBalanced(root->left) && isBalanced(root->right);
+}
+
+
+Q3.2 Improve the solution
+bool isBalanced(TreeNode* root, int& depth) {
+	if (root == NULL) {
+		depth = 0;
+		return true;
+	}
+	
+	int leftDepth, rightDepth；
+	bool bLeft = isBalanced(root->left, leftDepth);
+	bool bRight = isBalanced(root->right, rightDepth);
+	
+	if (bLeft && bRight) {
+		int diff = abs(leftDepth - rightDepth);
+		if (diff <=1) {
+			depth = (leftDepth > rightDepth ? leftDepth : rightDepth) + 1;
+			return true;
+		}
+	}
+	return false;
+}
+		
+Q3.3 Midterm 2  question 2 (重复强调，简要复习)
+Given a binary tree in which each node element contains a number. Find the maximum possible sum from one leaf node to another.
+The maximum sum path may or may not go through root. For example, in the following binary tree, the maximum sum is 27(3 + 6 + 9 + 0 – 1 + 10). Expected time complexity is O(n).
+
+
+Q4. Longest common substring/subsequence between two strings.
+

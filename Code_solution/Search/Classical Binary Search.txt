@@ -1,0 +1,20 @@
+  int binary_search(vector<int> a, int left, int right, int target) {
+	  if (a.size() == 0) {
+		  return -1;
+	  }
+	  int mid;
+	  while (left <= right) {
+		  mid = left + (right - left) / 2;
+		  if (a[mid] == target) {
+			  return mid;
+		  } else if (a[mid] > target) {
+			  right = mid - 1;
+		  } else {
+			  left = mid + 1;
+		  }
+	  }
+	  return -1;
+  }
+  int solve(vector<int> input, int target) {
+    return binary_search(input, 0, input.size() - 1, target);
+  }

@@ -1,0 +1,65 @@
+Q1:skiplist / graph copy problems
+
+Q1.1 Copy a skip list
+
+struct ListNode{
+	int val;
+	ListNode* next;
+	ListNode* forward;
+	ListNode(int x) : val(x), next(NULL), forward(NULL) {}
+}; 
+ListNode* copy(ListNode* head) {
+	if (head == NULL) {
+		return head;
+	}
+	ListNode* p = head->next;
+	map<ListNode*, ListNode*> hash_map;
+	ListNode* head2 = new ListNode(head.val);
+	ListNode* p2 = head2;
+	while (p != NULL) {
+		ListNode* q = new ListNode(p.val);
+		hash_map[p] = q;
+		p2->next = q;
+		p2 = p2->next;
+		p = p->next;
+	}
+	p = head;
+	p2 = head2;
+	while (p != NULL) {
+		if (p->forward != NULL) {
+			p2->forward = hash_map[p->forward];
+		}
+		p2 = p2->next;
+		p = p->next;
+	}
+}
+
+
+
+Q1.2: (Graph) How to copy a graph with possible cycles?   G-> G¡¯
+
+
+
+
+Q2  : k-way merge problems
+Q2.1  How to merge  k sorted array into one big sorted array?
+
+class Element {
+	double value;
+	int index; // for kth array
+	int pos; // position at original array
+}
+Q2.2  How to merge  k sorted LinkedList into one big LinkedList?
+class Element {
+	double value;
+	ListNode* next; // = temp->next;
+}
+
+
+
+Q3 Binary search tree (BST: find, insert, remove a node)
+Q3.1: (Find a node closest to the target value) 
+
+Q3.2  Given a BST, how to find the largest element in the tree that is smaller than a target number x.
+
+Q3.3 How to remove a target node from BST

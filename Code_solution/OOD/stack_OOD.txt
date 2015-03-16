@@ -1,0 +1,43 @@
+template <class T> class My_Stack {
+	private:
+		T *stack;
+		int size;
+		int maxsize;
+	public:
+	 	My_Stack(int length) {
+			maxsize = length;
+			stack = new T[maxsize];
+			size = 0;
+		}
+		My_Stack() {
+			maxsize = 100;
+			stack = new T[maxsize];
+			size = 0;
+		}
+		~My_Stack() {
+			delete [] stack;
+		}
+		bool isEmpty() {
+			return size == 0;
+		}
+		bool isFull() {
+			return size == maxsize;
+		}
+		void push(T t) {
+			if (!isFull()) {
+				size++;
+				stack[size - 1] = t;
+			} else {
+				cout << "stack is full!" << endl;
+			}
+		}
+		T pop() {
+			if (isEmpty()) {
+				cout << "stack is empty!" << endl;
+				return NULL;
+			}
+			T t = stack[size - 1];
+			size --;
+			return t;
+		}
+};

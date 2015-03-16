@@ -1,0 +1,19 @@
+vector<int> solve(vector<int> a) {
+    int asize = a.size();
+    if (asize == 0) return a;
+    vector<int> result;
+    int min,cur;
+    for (int i = 0; i < asize; i++) {
+        min = INT_MAX;
+        cur = 0;
+        for (int j = 0; j < asize; j++) {
+            if (a[j] < min) {
+              min = a[j];
+              cur = j;
+            }
+        }
+        result.push_back(min);
+        a[cur] = INT_MAX;
+    }
+    return result;
+}

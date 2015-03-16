@@ -1,0 +1,21 @@
+  int binary_search(UnknownSizeVector a, int left, int right, int target) {
+	  int mid;
+	  while (left <= right) {
+		  mid = left + (right - left) / 2;
+		  if (a.get(mid) == target) {
+			  return mid;
+		  } else if (a.get(mid) > target || a.get(mid) == INT_MIN) {
+			  right = mid - 1;
+		  } else {
+			  left = mid + 1;
+		  }
+	  }
+	  return -1;
+  }
+  int solve(UnknownSizeVector input, int target) {
+    int size = 1;
+    while (input.get(size - 1) < target && input.get(size - 1) != INT_MIN) {
+      size *= 2;
+    }
+    return binary_search(input, 0, size - 1, target);
+  }

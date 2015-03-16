@@ -1,0 +1,25 @@
+ int FindLast(vector<int> a, int target, int left, int right) {
+    if (left > right) {
+      return -1;
+    }
+    int LastOccur = -1;
+    //////
+    int l = left;
+    int r = right;
+    while (l < r - 1) {
+      int mid = l + (r - l) / 2;
+      if (a[mid] == target){
+        l = mid;
+      } else if (a[mid] > target) {
+        r = mid;
+      } else {
+        l = mid;
+      }
+    }
+    if (a[r] == target) LastOccur = r;
+    else if (a[l] == target) LastOccur = l;
+    return LastOccur;
+ }
+  int solve(vector<int> input, int target) {
+    return FindLast(input, target, 0, input.size() - 1);
+  }
