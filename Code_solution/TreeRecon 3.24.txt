@@ -1,0 +1,75 @@
+1. pre + in  reconstruct binary tree
+
+int preIndex = 0;
+int inIndex = 0;
+TreeNode* helper(int[] pre, int[] in, int inorderTarget) {
+	if (inIndex == in.length() || in[inIndex] == inorderTarget) {
+		return NULL;
+	}
+	TreeNode* root = new TreeNode(pre[preIndex]);
+	preIndex++;
+	root->left = helper(pre, in, root->value);
+	inIndex++;
+	root->right = helper(pre, in, inorderTarget);
+	return root;
+}
+
+
+2, pre-order reconstruct BST
+
+int index = 0;
+TreeNode* ReconBST(int[] pre) {
+	return helper(pre, INT_MAX); 
+}
+TreeNode* helper(int[] pre, int max) {
+	if (index == pre.length() || pre[index] >= max) {
+		return NULL;
+	}
+	TreeNode* root = new TreeNode(pre[index++]);
+	root->left = helper(pre, root->value);
+	root->right = helper(pre, max);
+	return root;
+}
+
+
+3, know pre + in, return post without construct.
+
+int preIndex = 0;
+int inIndex = 0;
+vector<int> post;
+void helper(int[] pre, int[] in, int inorderTarget) {
+	if (inIndex == in.length() || in[inIndex] == inorderTarget) {
+		return NULL;
+	}
+	int rootvalue = pre[preIndex++];
+	helper(pre, in, root->value);
+	inIndex++;
+	helper(pre, in, inorderTarget);
+	post.push_back(rootvalue);
+}
+
+
+4, level-order + special signal("#" for NULL)
+
+TreeNode* reconstruct(vector<string> level) {
+	if (level == NULL || level.size() ==0) {
+		return NULL;
+	}
+	int head = 0;
+	int end = 1;
+	vector<TreeNode*> array;
+	for (int i = 0; i < level.size(); i++) {
+		if (level[i] != "#") {
+			array.push_back(new TreeNode(level[i]));
+		} else {
+			array.push_back(NULL);
+		}
+	}
+	while (end < level.size()) {
+		array[head]->left = array[end++];	
+		if (end < level.size()) array[head]->right = array[end++];
+		head ++;
+		while (arrau[head] == NULL) head++;
+	}
+	return array[0];
+}
